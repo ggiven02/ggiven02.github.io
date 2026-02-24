@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Gabriel Given — Football Talent Scout</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
-
-  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ET537LWQGV"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -14,446 +12,176 @@
     gtag('js', new Date());
     gtag('config', 'G-ET537LWQGV');
   </script>
-
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     :root {
-      --cream: #f4f1eb;
-      --sand: #e6e0d4;
-      --gold: #b8953a;
-      --gold-light: #d4af60;
-      --dark: #0e0f0d;
-      --mid: #3a3830;
-      --green: #1a2e1a;
-      --green-light: #2d4a2d;
-      --text: #1e1e1a;
+      --cream: #f4f1eb; --sand: #e6e0d4; --gold: #b8953a;
+      --dark: #0e0f0d; --mid: #3a3830; --green: #1a2e1a; --text: #1e1e1a;
     }
-
     body.dark {
-      --cream: #0e0f0d;
-      --sand: #161710;
-      --gold: #c9a84c;
-      --dark: #f0ece0;
-      --mid: #b8b4a8;
-      --text: #e8e4d8;
-      --green: #0a180a;
+      --cream: #0e0f0d; --sand: #161710; --gold: #c9a84c;
+      --dark: #f0ece0; --mid: #b8b4a8; --text: #e8e4d8; --green: #0a180a;
     }
-
     html { scroll-behavior: smooth; }
+    body { background:var(--cream); color:var(--text); font-family:'Jost',sans-serif; font-weight:300; overflow-x:hidden; transition:background 0.4s, color 0.4s; }
 
-    body {
-      background: var(--cream);
-      color: var(--text);
-      font-family: 'Jost', sans-serif;
-      font-weight: 300;
-      overflow-x: hidden;
-      transition: background 0.4s, color 0.4s;
-    }
+    /* LOADER */
+    #loader { position:fixed; inset:0; z-index:99999; background:#0e0f0d; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:opacity 0.7s ease, visibility 0.7s ease; }
+    #loader.hidden { opacity:0; visibility:hidden; pointer-events:none; }
+    .loader-logo { font-family:'Cormorant Garamond',serif; font-size:2.5rem; font-weight:300; letter-spacing:0.2em; color:#f4f1eb; opacity:0; animation:fadeUp 0.8s 0.2s forwards; }
+    .loader-logo span { color:#b8953a; }
+    .loader-sub { font-size:0.6rem; letter-spacing:0.45em; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-top:0.5rem; opacity:0; animation:fadeIn 0.6s 0.6s forwards; }
+    .loader-bar-wrap { width:160px; height:1px; background:rgba(255,255,255,0.08); margin-top:2.5rem; overflow:hidden; opacity:0; animation:fadeIn 0.5s 0.5s forwards; }
+    .loader-bar { height:100%; width:0%; background:#b8953a; animation:loadBar 2s 0.6s cubic-bezier(0.4,0,0.2,1) forwards; }
+    @keyframes loadBar { 0%{width:0%} 60%{width:75%} 100%{width:100%} }
 
-    /* ── CURSOR ── */
-    .cursor {
-      position: fixed; top: 0; left: 0; width: 10px; height: 10px;
-      background: var(--gold); border-radius: 50%; pointer-events: none;
-      z-index: 9999; transform: translate(-50%,-50%);
-    }
-    .cursor-ring {
-      position: fixed; top: 0; left: 0; width: 36px; height: 36px;
-      border: 1px solid var(--gold); border-radius: 50%; pointer-events: none;
-      z-index: 9998; transform: translate(-50%,-50%);
-      transition: transform 0.18s ease;
-    }
+    /* CURSOR */
+    .cursor { position:fixed; top:0; left:0; width:10px; height:10px; background:var(--gold); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); }
+    .cursor-ring { position:fixed; top:0; left:0; width:36px; height:36px; border:1px solid var(--gold); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:left 0.15s ease, top 0.15s ease; }
 
-    /* ── LOADER ── */
-    #loader {
-      position: fixed; inset: 0; z-index: 99999;
-      background: var(--dark);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      transition: opacity 0.7s ease, visibility 0.7s ease;
-    }
-    #loader.hidden { opacity: 0; visibility: hidden; }
-    .loader-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.5rem; font-weight: 300; letter-spacing: 0.2em;
-      color: #f4f1eb; opacity: 0;
-      animation: fadeUp 0.8s 0.2s forwards;
-    }
-    .loader-logo span { color: var(--gold); }
-    .loader-sub {
-      font-size: 0.6rem; letter-spacing: 0.45em; text-transform: uppercase;
-      color: rgba(255,255,255,0.3); margin-top: 0.5rem;
-      opacity: 0; animation: fadeIn 0.6s 0.6s forwards;
-    }
-    .loader-bar-wrap {
-      width: 160px; height: 1px; background: rgba(255,255,255,0.08);
-      margin-top: 2.5rem; overflow: hidden;
-      opacity: 0; animation: fadeIn 0.5s 0.5s forwards;
-    }
-    .loader-bar {
-      height: 100%; width: 0%;
-      background: var(--gold);
-      animation: loadProgress 1.8s 0.6s cubic-bezier(0.4,0,0.2,1) forwards;
-    }
-    @keyframes loadProgress { 0%{width:0%} 60%{width:75%} 100%{width:100%} }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 1.8rem 4rem;
-      background: rgba(244,241,235,0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(184,149,58,0.12);
-      transition: background 0.4s;
-    }
-    body.dark nav { background: rgba(14,15,13,0.92); }
-    .nav-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem; font-weight: 300; letter-spacing: 0.12em;
-      color: var(--text); text-decoration: none;
-    }
-    .nav-logo span { color: var(--gold); }
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
-    .nav-links a {
-      text-decoration: none; font-size: 0.68rem; letter-spacing: 0.2em;
-      text-transform: uppercase; color: var(--mid);
-      position: relative; padding-bottom: 2px;
-      transition: color 0.3s;
-    }
-    .nav-links a::after {
-      content:''; position:absolute; bottom:0; left:0;
-      width:0; height:1px; background:var(--gold); transition:width 0.4s;
-    }
-    .nav-links a:hover { color: var(--gold); }
+    /* NAV */
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; justify-content:space-between; align-items:center; padding:1.8rem 4rem; background:rgba(244,241,235,0.93); backdrop-filter:blur(12px); border-bottom:1px solid rgba(184,149,58,0.12); transition:background 0.4s; }
+    body.dark nav { background:rgba(14,15,13,0.93); }
+    .nav-logo { font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:300; letter-spacing:0.12em; color:var(--text); text-decoration:none; }
+    .nav-logo span { color:var(--gold); }
+    .nav-links { display:flex; gap:2.5rem; list-style:none; align-items:center; }
+    .nav-links a { text-decoration:none; font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--mid); position:relative; padding-bottom:2px; transition:color 0.3s; }
+    .nav-links a::after { content:''; position:absolute; bottom:0; left:0; width:0; height:1px; background:var(--gold); transition:width 0.4s; }
+    .nav-links a:hover { color:var(--gold); }
     .nav-links a:hover::after { width:100%; }
-    .theme-toggle {
-      background: transparent;
-      border: 1px solid rgba(184,149,58,0.4); border-radius: 50%;
-      cursor: pointer; font-size: 1.1rem;
-      width: 38px; height: 38px;
-      display: flex; align-items: center; justify-content: center;
-      transition: transform 0.3s, border-color 0.3s;
-    }
-    .theme-toggle:hover { transform: scale(1.1); border-color: var(--gold); }
+    .theme-toggle { background:transparent; border:1px solid rgba(184,149,58,0.4); border-radius:50%; cursor:pointer; font-size:1.1rem; width:38px; height:38px; display:flex; align-items:center; justify-content:center; transition:transform 0.3s, border-color 0.3s; }
+    .theme-toggle:hover { transform:scale(1.1); border-color:var(--gold); }
 
-    /* ── HERO ── */
-    .hero {
-      min-height: 100vh; display: flex; flex-direction: column;
-      justify-content: flex-end; padding: 0 4rem 6rem;
-      position: relative; overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute; inset: 0;
-      background: linear-gradient(135deg, #0e0f0d 0%, #1a2e1a 40%, #0e1a0e 100%);
-      will-change: transform;
-    }
-    /* Pitch lines overlay */
-    .pitch-lines {
-      position: absolute; inset: 0; opacity: 0.06;
-      overflow: hidden;
-    }
-    .pitch-lines::before {
-      content: '';
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 280px; height: 280px;
-      border: 1px solid #fff;
-      border-radius: 50%;
-    }
-    .pitch-lines::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 50%;
-      transform: translateX(-50%);
-      width: 1px; height: 100%;
-      background: #fff;
-    }
-    .pitch-arc {
-      position: absolute; bottom: -60px; left: 50%;
-      transform: translateX(-50%);
-      width: 400px; height: 200px;
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
-    }
+    /* HERO */
+    .hero { min-height:100vh; display:flex; flex-direction:column; justify-content:flex-end; padding:0 4rem 6rem; position:relative; overflow:hidden; }
+    .hero-bg { position:absolute; inset:0; background:linear-gradient(135deg,#0e0f0d 0%,#1a2e1a 40%,#0e1a0e 100%); will-change:transform; }
+    .pitch-lines { position:absolute; inset:0; opacity:0.05; overflow:hidden; pointer-events:none; }
+    .pitch-lines::before { content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:280px; height:280px; border:1px solid #fff; border-radius:50%; }
+    .pitch-lines::after { content:''; position:absolute; top:0; left:50%; transform:translateX(-50%); width:1px; height:100%; background:#fff; }
+    .pitch-arc { position:absolute; bottom:-60px; left:50%; transform:translateX(-50%); width:400px; height:200px; border:1px solid rgba(255,255,255,0.04); border-radius:50% 50% 0 0 / 100% 100% 0 0; }
+    .hero-eyebrow { position:relative; font-size:0.62rem; letter-spacing:0.45em; text-transform:uppercase; color:var(--gold); margin-bottom:1.5rem; display:flex; align-items:center; gap:1rem; animation:fadeUp 1s 0.3s both; }
+    .hero-eyebrow::before { content:''; display:block; width:30px; height:1px; background:var(--gold); }
+    .hero-title { position:relative; font-family:'Cormorant Garamond',serif; font-size:clamp(3.5rem,9vw,8.5rem); font-weight:300; line-height:0.92; color:#f4f1eb; animation:fadeUp 1s 0.5s both; }
+    .hero-title em { font-style:italic; color:var(--gold); }
+    .hero-title .outline { -webkit-text-stroke:1px rgba(244,241,235,0.25); color:transparent; }
+    .hero-row { position:relative; display:flex; align-items:flex-end; justify-content:space-between; gap:4rem; margin-top:3rem; animation:fadeUp 1s 0.8s both; }
+    .hero-sub { font-size:0.85rem; line-height:1.9; color:rgba(244,241,235,0.55); max-width:380px; }
+    .hero-stats { display:flex; gap:3rem; }
+    .hero-stat-num { font-family:'Cormorant Garamond',serif; font-size:2.8rem; font-weight:300; color:var(--gold); line-height:1; }
+    .hero-stat-label { font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(244,241,235,0.35); margin-top:0.3rem; }
+    .hero-cta { position:relative; display:inline-flex; align-items:center; gap:1rem; text-decoration:none; margin-top:2.5rem; font-size:0.68rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); border:1px solid rgba(184,149,58,0.4); padding:1rem 2rem; transition:all 0.3s; animation:fadeUp 1s 1s both; }
+    .hero-cta:hover { background:var(--gold); color:var(--dark); }
+    .hero-cta::after { content:'→'; }
 
-    .hero-eyebrow {
-      position: relative; font-size: 0.62rem; letter-spacing: 0.45em;
-      text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem;
-      opacity: 0; animation: fadeUp 1s 0.3s forwards;
-      display: flex; align-items: center; gap: 1rem;
-    }
-    .hero-eyebrow::before {
-      content:''; display:block; width:30px; height:1px; background:var(--gold);
-    }
-    .hero-title {
-      position: relative;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(3.5rem, 9vw, 8.5rem);
-      font-weight: 300; line-height: 0.92;
-      color: #f4f1eb;
-      opacity: 0; animation: fadeUp 1s 0.5s forwards;
-    }
-    .hero-title em { font-style: italic; color: var(--gold); }
-    .hero-title .outline {
-      -webkit-text-stroke: 1px rgba(244,241,235,0.25);
-      color: transparent;
-    }
-    .hero-row {
-      position: relative; display: flex; align-items: flex-end;
-      justify-content: space-between; gap: 4rem; margin-top: 3rem;
-      opacity: 0; animation: fadeUp 1s 0.8s forwards;
-    }
-    .hero-sub {
-      font-size: 0.85rem; line-height: 1.9; color: rgba(244,241,235,0.55);
-      max-width: 380px;
-    }
-    .hero-stats {
-      display: flex; gap: 3rem;
-    }
-    .hero-stat-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.8rem; font-weight: 300; color: var(--gold); line-height: 1;
-    }
-    .hero-stat-label {
-      font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: rgba(244,241,235,0.35); margin-top: 0.3rem;
-    }
-    .hero-cta {
-      position: relative; display: inline-flex; align-items: center; gap: 1rem;
-      text-decoration: none; margin-top: 2.5rem;
-      font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase;
-      color: var(--gold); border: 1px solid rgba(184,149,58,0.4);
-      padding: 1rem 2rem; transition: all 0.3s;
-      opacity: 0; animation: fadeUp 1s 1s forwards;
-    }
-    .hero-cta:hover { background: var(--gold); color: var(--dark); }
-    .hero-cta::after { content: '→'; }
-
-    /* ── ABOUT ── */
-    .about { display: grid; grid-template-columns: 1fr 1fr; min-height: 85vh; }
-    .about-visual {
-      background: var(--green);
-      position: relative; overflow: hidden;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .pitch-visual {
-      width: 260px; height: 340px;
-      border: 1px solid rgba(184,149,58,0.3);
-      position: relative; display: flex; align-items: center; justify-content: center;
-    }
-    .pitch-visual::before {
-      content:''; position:absolute;
-      top:50%; left:0; right:0; height:1px;
-      background: rgba(184,149,58,0.2);
-    }
-    .pitch-visual::after {
-      content:''; position:absolute;
-      top:50%; left:50%; transform:translate(-50%,-50%);
-      width:80px; height:80px; border-radius:50%;
-      border: 1px solid rgba(184,149,58,0.3);
-    }
-    .pitch-dot {
-      width: 8px; height: 8px; background: var(--gold);
-      border-radius: 50%; position: absolute;
-      top: 50%; left: 50%; transform: translate(-50%,-50%);
-    }
-    .about-label-vert {
-      position: absolute; left: 2rem; bottom: 3rem;
-      font-size: 0.6rem; letter-spacing: 0.4em; text-transform: uppercase;
-      color: rgba(184,149,58,0.5); writing-mode: vertical-rl;
-    }
-    .about-content { padding: 7rem 5rem; display: flex; flex-direction: column; justify-content: center; }
-    .section-label {
-      font-size: 0.6rem; letter-spacing: 0.4em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 2rem;
-      display: flex; align-items: center; gap: 1rem;
-    }
+    /* ABOUT */
+    .about { display:grid; grid-template-columns:1fr 1fr; min-height:80vh; }
+    .about-visual { background:var(--green); position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+    .pitch-visual { width:260px; height:340px; border:1px solid rgba(184,149,58,0.3); position:relative; display:flex; align-items:center; justify-content:center; }
+    .pitch-visual::before { content:''; position:absolute; top:50%; left:0; right:0; height:1px; background:rgba(184,149,58,0.2); }
+    .pitch-visual::after { content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:80px; height:80px; border-radius:50%; border:1px solid rgba(184,149,58,0.3); }
+    .pitch-dot { width:8px; height:8px; background:var(--gold); border-radius:50%; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
+    .about-label-vert { position:absolute; left:2rem; bottom:3rem; font-size:0.6rem; letter-spacing:0.4em; text-transform:uppercase; color:rgba(184,149,58,0.5); writing-mode:vertical-rl; }
+    .about-content { padding:7rem 5rem; display:flex; flex-direction:column; justify-content:center; }
+    .section-label { font-size:0.6rem; letter-spacing:0.4em; text-transform:uppercase; color:var(--gold); margin-bottom:2rem; display:flex; align-items:center; gap:1rem; }
     .section-label::before { content:''; display:block; width:30px; height:1px; background:var(--gold); }
-    .about-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 3.5vw, 3rem);
-      font-weight: 300; line-height: 1.2; margin-bottom: 2rem;
-    }
-    .about-title em { font-style: italic; color: var(--gold); }
-    .about-text { font-size: 0.88rem; line-height: 1.9; color: var(--mid); margin-bottom: 1.2rem; }
+    .about-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,3.5vw,3rem); font-weight:300; line-height:1.2; margin-bottom:2rem; }
+    .about-title em { font-style:italic; color:var(--gold); }
+    .about-text { font-size:0.88rem; line-height:1.9; color:var(--mid); margin-bottom:1.2rem; }
     .stat-row { display:flex; gap:2.5rem; margin-top:3rem; padding-top:2.5rem; border-top:1px solid var(--sand); }
     .stat-num { font-family:'Cormorant Garamond',serif; font-size:2.5rem; font-weight:300; color:var(--gold); line-height:1; }
     .stat-label { font-size:0.62rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--mid); margin-top:0.3rem; }
 
-    /* ── SERVICES ── */
-    .services { padding: 8rem 4rem; background: var(--dark); transition: background 0.4s; }
-    body.dark .services { background: #060706; }
-    .services-header {
-      display: flex; justify-content: space-between; align-items: flex-end;
-      margin-bottom: 5rem; border-bottom: 1px solid rgba(255,255,255,0.06);
-      padding-bottom: 3rem;
-    }
-    .services-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 300;
-      color: #f4f1eb; max-width: 480px; line-height: 1.1;
-    }
-    .services-title em { font-style: italic; color: var(--gold); }
-    .services-desc { font-size: 0.83rem; line-height: 1.8; color: rgba(244,241,235,0.4); max-width: 280px; }
-    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255,255,255,0.05); }
-    .service-card { background: var(--dark); padding: 3rem 2.5rem; transition: background 0.4s; cursor: default; }
-    body.dark .service-card { background: #060706; }
-    .service-card:hover { background: #111410; }
-    body.dark .service-card:hover { background: #0d0e0c; }
-    .service-icon { font-size: 1.8rem; margin-bottom: 1.5rem; opacity: 0.8; }
+    /* SERVICES */
+    .services { padding:8rem 4rem; background:var(--dark); transition:background 0.4s; }
+    body.dark .services { background:#060706; }
+    .services-header { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:5rem; border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:3rem; }
+    .services-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2.5rem,5vw,4rem); font-weight:300; color:#f4f1eb; max-width:480px; line-height:1.1; }
+    .services-title em { font-style:italic; color:var(--gold); }
+    .services-desc { font-size:0.83rem; line-height:1.8; color:rgba(244,241,235,0.4); max-width:280px; }
+    .services-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(255,255,255,0.05); }
+    .service-card { background:var(--dark); padding:3rem 2.5rem; transition:background 0.4s; }
+    body.dark .service-card { background:#060706; }
+    .service-card:hover { background:#111410; }
     .service-num { font-family:'Cormorant Garamond',serif; font-size:3.5rem; font-weight:300; color:rgba(184,149,58,0.12); line-height:1; margin-bottom:1.5rem; }
     .service-name { font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:400; color:#f4f1eb; margin-bottom:0.8rem; }
     .service-desc { font-size:0.78rem; line-height:1.8; color:rgba(244,241,235,0.4); }
 
-    /* ── PORTFOLIO ── */
-    .portfolio { padding: 8rem 4rem; }
-    .portfolio-header { text-align: center; margin-bottom: 4rem; }
-    .portfolio-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 300;
-      line-height: 1.1; margin-bottom: 1rem;
-    }
-    .portfolio-title em { font-style: italic; color: var(--gold); }
-    .portfolio-sub { font-size: 0.83rem; color: var(--mid); max-width: 400px; margin: 0 auto; line-height: 1.8; }
-
-    /* Filter */
+    /* PORTFOLIO */
+    .portfolio { padding:8rem 4rem; }
+    .portfolio-header { text-align:center; margin-bottom:4rem; }
+    .portfolio-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2.5rem,5vw,4rem); font-weight:300; line-height:1.1; margin-bottom:1rem; }
+    .portfolio-title em { font-style:italic; color:var(--gold); }
+    .portfolio-sub { font-size:0.83rem; color:var(--mid); max-width:400px; margin:0 auto; line-height:1.8; }
     .filter-bar { display:flex; justify-content:center; gap:0.5rem; margin-bottom:4rem; flex-wrap:wrap; }
-    .filter-btn {
-      background:transparent; border:1px solid rgba(58,56,48,0.2);
-      color:var(--mid); padding:0.55rem 1.4rem;
-      font-family:'Jost',sans-serif; font-size:0.65rem;
-      letter-spacing:0.25em; text-transform:uppercase;
-      cursor:pointer; transition:all 0.3s;
-    }
+    .filter-btn { background:transparent; border:1px solid rgba(58,56,48,0.2); color:var(--mid); padding:0.55rem 1.4rem; font-family:'Jost',sans-serif; font-size:0.65rem; letter-spacing:0.25em; text-transform:uppercase; cursor:pointer; transition:all 0.3s; }
     .filter-btn:hover { border-color:var(--gold); color:var(--gold); }
     .filter-btn.active { background:var(--dark); border-color:var(--dark); color:#f4f1eb; }
-    body.dark .filter-btn.active { background: var(--gold); border-color:var(--gold); color:var(--dark); }
-
+    body.dark .filter-btn.active { background:var(--gold); border-color:var(--gold); color:var(--dark); }
     .players-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; }
-    .player-card {
-      background: var(--sand); position:relative; overflow:hidden;
-      transition: transform 0.3s, box-shadow 0.3s, opacity 0.4s;
-      cursor: pointer;
-    }
-    body.dark .player-card { background: #161710; }
-    .player-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,0.12); }
-    .player-card.hidden { opacity:0; transform:scale(0.95); pointer-events:none; position:absolute; visibility:hidden; }
-    .player-visual {
-      height: 220px; position:relative; overflow:hidden;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .player-visual.v1 { background: linear-gradient(135deg, #1a2e1a, #2d4a2d); }
-    .player-visual.v2 { background: linear-gradient(135deg, #0e1a0e, #1a3020); }
-    .player-visual.v3 { background: linear-gradient(135deg, #162816, #243c24); }
-    .player-visual.v4 { background: linear-gradient(135deg, #0a1a0a, #1a2a18); }
-    .player-jersey {
-      font-size: 4rem; opacity: 0.4;
-    }
-    .player-number {
-      position:absolute; top:1rem; right:1.2rem;
-      font-family:'Cormorant Garamond',serif;
-      font-size:3rem; font-weight:300;
-      color:rgba(184,149,58,0.2); line-height:1;
-    }
-    .player-position-badge {
-      position:absolute; bottom:1rem; left:1.2rem;
-      font-size:0.58rem; letter-spacing:0.3em; text-transform:uppercase;
-      color:var(--gold); background:rgba(0,0,0,0.5);
-      padding:0.3rem 0.7rem;
-    }
-    .player-info { padding: 1.5rem; }
+    .player-card { background:var(--sand); position:relative; overflow:hidden; transition:transform 0.3s, box-shadow 0.3s; }
+    body.dark .player-card { background:#161710; }
+    .player-card:hover { transform:translateY(-4px); box-shadow:0 20px 50px rgba(0,0,0,0.12); }
+    .player-card.hidden { display:none; }
+    .player-visual { height:220px; position:relative; display:flex; align-items:center; justify-content:center; }
+    .player-visual.v1 { background:linear-gradient(135deg,#1a2e1a,#2d4a2d); }
+    .player-visual.v2 { background:linear-gradient(135deg,#0e1a0e,#1a3020); }
+    .player-visual.v3 { background:linear-gradient(135deg,#162816,#243c24); }
+    .player-visual.v4 { background:linear-gradient(135deg,#0a1a0a,#1a2a18); }
+    .player-jersey { font-size:4rem; opacity:0.35; }
+    .player-number { position:absolute; top:1rem; right:1.2rem; font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:300; color:rgba(184,149,58,0.2); line-height:1; }
+    .player-position-badge { position:absolute; bottom:1rem; left:1.2rem; font-size:0.58rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold); background:rgba(0,0,0,0.5); padding:0.3rem 0.7rem; }
+    .player-info { padding:1.5rem; }
     .player-name { font-family:'Cormorant Garamond',serif; font-size:1.4rem; font-weight:400; margin-bottom:0.3rem; }
     .player-meta { font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem; }
     .player-stats { display:flex; gap:1.5rem; padding-top:1rem; border-top:1px solid rgba(58,56,48,0.12); }
-    .pstat { }
     .pstat-val { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:300; color:var(--text); line-height:1; }
     .pstat-key { font-size:0.58rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--mid); margin-top:0.2rem; }
 
-    /* ── VIDEO ── */
-    .video-section { padding: 8rem 4rem; background: var(--green); }
-    body.dark .video-section { background: #060a06; }
-    .video-header { margin-bottom: 4rem; }
-    .video-title {
-      font-family:'Cormorant Garamond',serif;
-      font-size:clamp(2.5rem,5vw,4rem); font-weight:300;
-      color:#f4f1eb; line-height:1.1;
-    }
+    /* VIDEO */
+    .video-section { padding:8rem 4rem; background:var(--green); transition:background 0.4s; }
+    body.dark .video-section { background:#060a06; }
+    .video-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2.5rem,5vw,4rem); font-weight:300; color:#f4f1eb; line-height:1.1; margin-bottom:4rem; }
     .video-title em { font-style:italic; color:var(--gold); }
     .video-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
-    .video-card {
-      position:relative; cursor:pointer;
-      transition: transform 0.3s;
-    }
-    .video-card:hover { transform: translateY(-3px); }
-    .video-thumb {
-      width:100%; aspect-ratio:16/9;
-      background: rgba(0,0,0,0.4);
-      display:flex; align-items:center; justify-content:center;
-      position:relative; overflow:hidden;
-    }
-    .video-thumb.vt1 { background: linear-gradient(135deg, #0a1a0a, #1a3020); }
-    .video-thumb.vt2 { background: linear-gradient(135deg, #0e1e0e, #162816); }
-    .video-thumb.vt3 { background: linear-gradient(135deg, #060e06, #0e1a0e); }
-    .play-btn {
-      width:52px; height:52px; border-radius:50%;
-      border:1px solid rgba(184,149,58,0.6);
-      display:flex; align-items:center; justify-content:center;
-      color:var(--gold); font-size:1.1rem;
-      transition: all 0.3s; padding-left:4px;
-    }
+    .video-card { position:relative; cursor:pointer; transition:transform 0.3s; }
+    .video-card:hover { transform:translateY(-3px); }
+    .video-thumb { width:100%; aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; position:relative; }
+    .video-thumb.vt1 { background:linear-gradient(135deg,#0a1a0a,#1a3020); }
+    .video-thumb.vt2 { background:linear-gradient(135deg,#0e1e0e,#162816); }
+    .video-thumb.vt3 { background:linear-gradient(135deg,#060e06,#0e1a0e); }
+    .play-btn { width:52px; height:52px; border-radius:50%; border:1px solid rgba(184,149,58,0.6); display:flex; align-items:center; justify-content:center; color:var(--gold); font-size:1.1rem; transition:all 0.3s; padding-left:4px; }
     .video-card:hover .play-btn { background:var(--gold); color:var(--dark); border-color:var(--gold); }
-    .video-duration {
-      position:absolute; bottom:0.7rem; right:0.8rem;
-      font-size:0.65rem; color:rgba(244,241,235,0.6); letter-spacing:0.05em;
-    }
+    .video-duration { position:absolute; bottom:0.7rem; right:0.8rem; font-size:0.65rem; color:rgba(244,241,235,0.6); }
     .video-info { padding:1rem 0; }
     .video-title-card { font-size:0.85rem; font-weight:400; color:#f4f1eb; margin-bottom:0.3rem; }
     .video-meta { font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:rgba(184,149,58,0.7); }
 
-    /* ── STATS ── */
-    .stats-section { padding: 8rem 4rem; }
-    .stats-title {
-      font-family:'Cormorant Garamond',serif;
-      font-size:clamp(2.5rem,5vw,4rem); font-weight:300;
-      line-height:1.1; margin-bottom:1rem; text-align:center;
-    }
+    /* STATS */
+    .stats-section { padding:8rem 4rem; }
+    .stats-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2.5rem,5vw,4rem); font-weight:300; line-height:1.1; margin-bottom:1rem; text-align:center; }
     .stats-title em { font-style:italic; color:var(--gold); }
     .stats-sub { text-align:center; font-size:0.83rem; color:var(--mid); margin-bottom:5rem; }
     .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--sand); }
-    body.dark .stats-grid { background: #1a1b14; }
-    .stat-block {
-      background:var(--cream); padding:3rem 2rem; text-align:center;
-      transition: background 0.3s;
-    }
-    body.dark .stat-block { background: var(--cream); }
-    .stat-block:hover { background: var(--sand); }
+    body.dark .stats-grid { background:#1a1b14; }
+    .stat-block { background:var(--cream); padding:3rem 2rem; text-align:center; transition:background 0.3s; }
+    .stat-block:hover { background:var(--sand); }
     .stat-big { font-family:'Cormorant Garamond',serif; font-size:4rem; font-weight:300; color:var(--gold); line-height:1; }
     .stat-desc { font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--mid); margin-top:0.8rem; line-height:1.5; }
-
-    /* Radar chart placeholder */
-    .radar-wrap {
-      margin-top: 5rem; display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center;
-    }
-    .radar-visual {
-      aspect-ratio:1; max-width:380px; margin:0 auto;
-      position:relative; display:flex; align-items:center; justify-content:center;
-    }
+    .radar-wrap { margin-top:5rem; display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
+    .radar-visual { aspect-ratio:1; max-width:380px; margin:0 auto; }
     .radar-svg { width:100%; height:100%; }
-    .radar-content { }
     .radar-title { font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:300; margin-bottom:1.5rem; }
     .radar-title em { font-style:italic; color:var(--gold); }
     .skill-row { display:flex; align-items:center; gap:1rem; margin-bottom:1rem; }
     .skill-name { font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--mid); width:120px; }
     .skill-bar-bg { flex:1; height:2px; background:var(--sand); }
-    body.dark .skill-bar-bg { background: #2a2b20; }
-    .skill-bar { height:100%; background:var(--gold); transition:width 1.5s ease; width:0%; }
+    body.dark .skill-bar-bg { background:#2a2b20; }
+    .skill-bar { height:100%; background:var(--gold); transition:width 1.5s ease; }
     .skill-val { font-size:0.75rem; font-family:'Cormorant Garamond',serif; color:var(--gold); width:30px; text-align:right; }
 
-    /* ── CONTACT ── */
-    .contact { padding: 8rem 4rem; background: var(--sand); display:flex; gap:6rem; align-items:center; transition:background 0.4s; }
-    body.dark .contact { background: #161710; }
+    /* CONTACT */
+    .contact { padding:8rem 4rem; background:var(--sand); display:flex; gap:6rem; align-items:center; transition:background 0.4s; }
+    body.dark .contact { background:#161710; }
     .contact-left { flex:1; }
     .contact-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2.5rem,5vw,4rem); font-weight:300; line-height:1.1; margin-bottom:2rem; }
     .contact-title em { font-style:italic; color:var(--gold); }
@@ -463,32 +191,15 @@
     .contact-right { flex:1; }
     .form-group { margin-bottom:1.8rem; }
     .form-group label { display:block; font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--mid); margin-bottom:0.6rem; }
-    .form-group input, .form-group textarea, .form-group select {
-      width:100%; background:transparent;
-      border:none; border-bottom:1px solid rgba(58,56,48,0.25);
-      padding:0.7rem 0; font-family:'Jost',sans-serif;
-      font-size:0.88rem; font-weight:300; color:var(--text);
-      outline:none; transition:border-color 0.3s; resize:none;
-      -webkit-appearance:none;
-    }
+    .form-group input, .form-group textarea, .form-group select { width:100%; background:transparent; border:none; border-bottom:1px solid rgba(58,56,48,0.25); padding:0.7rem 0; font-family:'Jost',sans-serif; font-size:0.88rem; font-weight:300; color:var(--text); outline:none; transition:border-color 0.3s; resize:none; -webkit-appearance:none; }
     .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color:var(--gold); }
-    .btn-submit {
-      display:inline-flex; align-items:center; gap:1rem;
-      background:var(--dark); color:#f4f1eb;
-      padding:1.1rem 2.5rem; border:none; cursor:pointer;
-      font-family:'Jost',sans-serif; font-size:0.68rem;
-      letter-spacing:0.25em; text-transform:uppercase; transition:background 0.3s;
-    }
+    .btn-submit { display:inline-flex; align-items:center; gap:1rem; background:var(--dark); color:#f4f1eb; padding:1.1rem 2.5rem; border:none; cursor:pointer; font-family:'Jost',sans-serif; font-size:0.68rem; letter-spacing:0.25em; text-transform:uppercase; transition:background 0.3s; }
     .btn-submit:hover { background:var(--gold); color:var(--dark); }
     .btn-submit::after { content:'→'; font-size:1rem; }
 
-    /* ── FOOTER ── */
-    footer {
-      background:var(--dark); padding:2.5rem 4rem;
-      display:flex; justify-content:space-between; align-items:center;
-      transition:background 0.4s;
-    }
-    body.dark footer { background: #060706; }
+    /* FOOTER */
+    footer { background:var(--dark); padding:2.5rem 4rem; display:flex; justify-content:space-between; align-items:center; transition:background 0.4s; }
+    body.dark footer { background:#060706; }
     .footer-logo { font-family:'Cormorant Garamond',serif; font-size:1.2rem; color:#f4f1eb; letter-spacing:0.12em; }
     .footer-logo span { color:var(--gold); }
     .footer-copy { font-size:0.62rem; letter-spacing:0.12em; color:rgba(244,241,235,0.25); }
@@ -496,32 +207,25 @@
     .footer-links a { font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase; color:rgba(244,241,235,0.35); text-decoration:none; transition:color 0.3s; }
     .footer-links a:hover { color:var(--gold); }
 
-    /* ── COOKIE BANNER ── */
-    #cookieBanner {
-      position:fixed; bottom:2rem; left:50%; transform:translateX(-50%) translateY(120px);
-      width:min(700px,calc(100vw - 2rem));
-      background:var(--dark); padding:2rem 2.5rem; z-index:9000;
-      display:flex; gap:2rem; align-items:center; flex-wrap:wrap;
-      box-shadow:0 20px 60px rgba(0,0,0,0.4);
-      border-top:1px solid rgba(184,149,58,0.3);
-      transition:transform 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.6s;
-      opacity:0;
-    }
+    /* COOKIE */
+    #cookieBanner { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%) translateY(140px); width:min(700px,calc(100vw - 2rem)); background:var(--dark); padding:2rem 2.5rem; z-index:9000; display:flex; gap:2rem; align-items:center; flex-wrap:wrap; box-shadow:0 20px 60px rgba(0,0,0,0.4); border-top:1px solid rgba(184,149,58,0.3); transition:transform 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.6s; opacity:0; }
     #cookieBanner p { font-size:0.75rem; line-height:1.7; color:rgba(244,241,235,0.55); }
     #cookieBanner p strong { color:var(--gold); font-weight:400; display:block; font-family:'Cormorant Garamond',serif; font-size:1rem; margin-bottom:0.2rem; }
     .cookie-btns { display:flex; gap:0.8rem; flex-wrap:wrap; align-items:center; }
-    .cookie-btns button { padding:0.6rem 1.2rem; font-family:'Jost',sans-serif; font-size:0.62rem; letter-spacing:0.2em; text-transform:uppercase; cursor:pointer; border:none; }
-    #cookieDecline { background:transparent; border:1px solid rgba(255,255,255,0.12) !important; color:rgba(244,241,235,0.4); }
-    #cookieEssential { background:transparent; border:1px solid rgba(184,149,58,0.4) !important; color:var(--gold); }
-    #cookieAccept { background:var(--gold); color:var(--dark); }
+    .cookie-btns button { padding:0.6rem 1.2rem; font-family:'Jost',sans-serif; font-size:0.62rem; letter-spacing:0.2em; text-transform:uppercase; cursor:pointer; }
+    #cookieDecline { background:transparent; border:1px solid rgba(255,255,255,0.12); color:rgba(244,241,235,0.4); }
+    #cookieEssential { background:transparent; border:1px solid rgba(184,149,58,0.4); color:var(--gold); }
+    #cookieAccept { background:var(--gold); border:none; color:var(--dark); }
 
-    /* ── ANIMATIONS ── */
+    /* PARALLAX */
+    .parallax-wrap { overflow:hidden; }
+    .parallax-inner { will-change:transform; transform:scale(1.12) translateY(0px); width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
+
+    /* ANIMATIONS */
     @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
     @keyframes fadeIn { from{opacity:0} to{opacity:1} }
-    .reveal { opacity:0; transform:translateY(40px); transition:opacity 0.8s ease, transform 0.8s ease; }
-    .reveal.visible { opacity:1; transform:none; }
 
-    /* ── RESPONSIVE ── */
+    /* RESPONSIVE */
     @media(max-width:900px) {
       nav { padding:1.5rem 2rem; }
       .nav-links { display:none; }
@@ -530,21 +234,17 @@
       .about { grid-template-columns:1fr; }
       .about-visual { height:40vh; }
       .about-content { padding:3rem 2rem; }
-      .services { padding:5rem 2rem; }
+      .services, .portfolio, .video-section, .stats-section, .contact { padding:5rem 2rem; }
       .services-header { flex-direction:column; align-items:flex-start; gap:2rem; }
       .services-grid, .players-grid, .video-grid { grid-template-columns:1fr; }
-      .portfolio, .video-section, .stats-section, .contact { padding:5rem 2rem; }
       .stats-grid { grid-template-columns:repeat(2,1fr); }
       .radar-wrap { grid-template-columns:1fr; }
       .contact { flex-direction:column; }
-      footer { flex-direction:column; gap:1.5rem; text-align:center; }
+      footer { flex-direction:column; gap:1.5rem; text-align:center; padding:2rem; }
     }
   </style>
 </head>
 <body>
-
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
 
   <!-- LOADER -->
   <div id="loader">
@@ -552,6 +252,9 @@
     <p class="loader-sub">Football Talent Scout</p>
     <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
   </div>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
 
   <!-- NAV -->
   <nav>
@@ -571,7 +274,6 @@
     <div class="hero-bg"></div>
     <div class="pitch-lines"></div>
     <div class="pitch-arc"></div>
-
     <p class="hero-eyebrow">Football Talent Scout — Milano</p>
     <h1 class="hero-title">
       Scopro<br><em>Talenti</em><br><span class="outline">Nascosti</span>
@@ -582,31 +284,20 @@
         <a href="#players" class="hero-cta">Scopri i profili</a>
       </div>
       <div class="hero-stats">
-        <div>
-          <div class="hero-stat-num">120+</div>
-          <div class="hero-stat-label">Giocatori osservati</div>
-        </div>
-        <div>
-          <div class="hero-stat-num">8+</div>
-          <div class="hero-stat-label">Anni di esperienza</div>
-        </div>
-        <div>
-          <div class="hero-stat-num">15+</div>
-          <div class="hero-stat-label">Club partner</div>
-        </div>
+        <div><div class="hero-stat-num">120+</div><div class="hero-stat-label">Giocatori osservati</div></div>
+        <div><div class="hero-stat-num">8+</div><div class="hero-stat-label">Anni di esperienza</div></div>
+        <div><div class="hero-stat-num">15+</div><div class="hero-stat-label">Club partner</div></div>
       </div>
     </div>
   </section>
 
   <!-- ABOUT -->
   <section class="about" id="about">
-    <div class="about-visual reveal">
-      <div class="pitch-visual">
-        <div class="pitch-dot"></div>
-      </div>
+    <div class="about-visual">
+      <div class="pitch-visual"><div class="pitch-dot"></div></div>
       <div class="about-label-vert">Scouting · Analysis · Consulting</div>
     </div>
-    <div class="about-content reveal">
+    <div class="about-content">
       <p class="section-label">Chi sono</p>
       <h2 class="about-title">Leggo il gioco.<br>Trovo il <em>talento</em>.</h2>
       <p class="about-text">Sono Gabriel Given, osservatore calcistico con anni di esperienza sul campo. La mia specialità è identificare giocatori con alto potenziale prima che diventino mainstream — offrendo a società e agenti un vantaggio competitivo concreto sul mercato.</p>
@@ -621,192 +312,86 @@
 
   <!-- SERVICES -->
   <section class="services" id="services">
-    <div class="services-header reveal">
+    <div class="services-header">
       <h2 class="services-title">Cosa posso<br>fare per <em>te</em></h2>
-      <p class="services-desc">Soluzioni professionali su misura per società di calcio e agenti che vogliono anticipare il mercato e investire sui giusti profili.</p>
+      <p class="services-desc">Soluzioni professionali su misura per società di calcio e agenti che vogliono anticipare il mercato.</p>
     </div>
-    <div class="services-grid reveal">
-      <div class="service-card">
-        <div class="service-num">01</div>
-        <div class="service-name">Talent Scouting</div>
-        <p class="service-desc">Osservazione diretta sul campo e analisi approfondita di giocatori in ogni categoria e ruolo.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-num">02</div>
-        <div class="service-name">Report & Analisi</div>
-        <p class="service-desc">Report tecnici dettagliati con statistiche, valutazioni e proiezione del potenziale di crescita.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-num">03</div>
-        <div class="service-name">Video Analysis</div>
-        <p class="service-desc">Montaggio e analisi di highlights personalizzati per valorizzare le qualità di ogni giocatore.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-num">04</div>
-        <div class="service-name">Profili su Richiesta</div>
-        <p class="service-desc">Database aggiornato di profili selezionati, disponibili su richiesta per società e agenti in cerca di rinforzi mirati.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-num">05</div>
-        <div class="service-name">Consulenza Club</div>
-        <p class="service-desc">Supporto strategico a club e società sportive nella pianificazione del mercato e degli acquisti.</p>
-      </div>
-      <div class="service-card">
-        <div class="service-num">06</div>
-        <div class="service-name">Network & Placement</div>
-        <p class="service-desc">Connessione diretta con il mio network di procuratori, club e direttori sportivi in Italia e all'estero.</p>
-      </div>
+    <div class="services-grid">
+      <div class="service-card"><div class="service-num">01</div><div class="service-name">Talent Scouting</div><p class="service-desc">Osservazione diretta sul campo e analisi approfondita di giocatori in ogni categoria e ruolo.</p></div>
+      <div class="service-card"><div class="service-num">02</div><div class="service-name">Report & Analisi</div><p class="service-desc">Report tecnici dettagliati con statistiche, valutazioni e proiezione del potenziale di crescita.</p></div>
+      <div class="service-card"><div class="service-num">03</div><div class="service-name">Video Analysis</div><p class="service-desc">Montaggio e analisi di highlights personalizzati per valorizzare le qualità di ogni giocatore.</p></div>
+      <div class="service-card"><div class="service-num">04</div><div class="service-name">Profili su Richiesta</div><p class="service-desc">Database aggiornato di profili selezionati, disponibili su richiesta per società e agenti in cerca di rinforzi mirati.</p></div>
+      <div class="service-card"><div class="service-num">05</div><div class="service-name">Consulenza Club</div><p class="service-desc">Supporto strategico a club e società sportive nella pianificazione del mercato e degli acquisti.</p></div>
+      <div class="service-card"><div class="service-num">06</div><div class="service-name">Network & Placement</div><p class="service-desc">Connessione diretta con il mio network di procuratori, club e direttori sportivi in Italia e all'estero.</p></div>
     </div>
   </section>
 
-  <!-- PORTFOLIO GIOCATORI -->
+  <!-- PORTFOLIO -->
   <section class="portfolio" id="players">
-    <div class="portfolio-header reveal">
+    <div class="portfolio-header">
       <p class="section-label" style="justify-content:center;">Talenti osservati</p>
       <h2 class="portfolio-title">Il mio <em>portfolio</em></h2>
       <p class="portfolio-sub">Una selezione di profili già valutati e disponibili. Ogni scheda è il risultato di un'analisi tecnica e tattica approfondita.</p>
     </div>
-    <div class="filter-bar reveal">
+    <div class="filter-bar">
       <button class="filter-btn active" data-filter="all">Tutti</button>
       <button class="filter-btn" data-filter="Attaccante">Attaccanti</button>
       <button class="filter-btn" data-filter="Centrocampista">Centrocampisti</button>
       <button class="filter-btn" data-filter="Difensore">Difensori</button>
       <button class="filter-btn" data-filter="Portiere">Portieri</button>
     </div>
-    <div class="players-grid reveal" id="playersGrid">
+    <div class="players-grid">
       <div class="player-card" data-category="Attaccante">
-        <div class="player-visual v1 parallax-wrap">
-          <div class="player-jersey parallax-inner">⚽</div>
-          <div class="player-number">9</div>
-          <div class="player-position-badge">Attaccante</div>
-        </div>
-        <div class="player-info">
-          <div class="player-name">M. Rossi</div>
-          <div class="player-meta">Serie C · 22 anni · Italiano</div>
-          <div class="player-stats">
-            <div class="pstat"><div class="pstat-val">18</div><div class="pstat-key">Goal</div></div>
-            <div class="pstat"><div class="pstat-val">7</div><div class="pstat-key">Assist</div></div>
-            <div class="pstat"><div class="pstat-val">87</div><div class="pstat-key">Rating</div></div>
-          </div>
-        </div>
+        <div class="player-visual v1 parallax-wrap"><div class="player-jersey parallax-inner">⚽</div><div class="player-number">9</div><div class="player-position-badge">Attaccante</div></div>
+        <div class="player-info"><div class="player-name">M. Rossi</div><div class="player-meta">Serie C · 22 anni · Italiano</div><div class="player-stats"><div class="pstat"><div class="pstat-val">18</div><div class="pstat-key">Goal</div></div><div class="pstat"><div class="pstat-val">7</div><div class="pstat-key">Assist</div></div><div class="pstat"><div class="pstat-val">87</div><div class="pstat-key">Rating</div></div></div></div>
       </div>
       <div class="player-card" data-category="Centrocampista" style="margin-top:3rem;">
-        <div class="player-visual v2 parallax-wrap">
-          <div class="player-jersey parallax-inner">🎯</div>
-          <div class="player-number">8</div>
-          <div class="player-position-badge">Centrocampista</div>
-        </div>
-        <div class="player-info">
-          <div class="player-name">A. Bianchi</div>
-          <div class="player-meta">Serie D · 20 anni · Italiano</div>
-          <div class="player-stats">
-            <div class="pstat"><div class="pstat-val">6</div><div class="pstat-key">Goal</div></div>
-            <div class="pstat"><div class="pstat-val">14</div><div class="pstat-key">Assist</div></div>
-            <div class="pstat"><div class="pstat-val">84</div><div class="pstat-key">Rating</div></div>
-          </div>
-        </div>
+        <div class="player-visual v2 parallax-wrap"><div class="player-jersey parallax-inner">🎯</div><div class="player-number">8</div><div class="player-position-badge">Centrocampista</div></div>
+        <div class="player-info"><div class="player-name">A. Bianchi</div><div class="player-meta">Serie D · 20 anni · Italiano</div><div class="player-stats"><div class="pstat"><div class="pstat-val">6</div><div class="pstat-key">Goal</div></div><div class="pstat"><div class="pstat-val">14</div><div class="pstat-key">Assist</div></div><div class="pstat"><div class="pstat-val">84</div><div class="pstat-key">Rating</div></div></div></div>
       </div>
       <div class="player-card" data-category="Difensore">
-        <div class="player-visual v3 parallax-wrap">
-          <div class="player-jersey parallax-inner">🛡️</div>
-          <div class="player-number">5</div>
-          <div class="player-position-badge">Difensore</div>
-        </div>
-        <div class="player-info">
-          <div class="player-name">L. Ferrari</div>
-          <div class="player-meta">Primavera · 19 anni · Italiano</div>
-          <div class="player-stats">
-            <div class="pstat"><div class="pstat-val">3</div><div class="pstat-key">Goal</div></div>
-            <div class="pstat"><div class="pstat-val">89%</div><div class="pstat-key">Duelli</div></div>
-            <div class="pstat"><div class="pstat-val">82</div><div class="pstat-key">Rating</div></div>
-          </div>
-        </div>
+        <div class="player-visual v3 parallax-wrap"><div class="player-jersey parallax-inner">🛡️</div><div class="player-number">5</div><div class="player-position-badge">Difensore</div></div>
+        <div class="player-info"><div class="player-name">L. Ferrari</div><div class="player-meta">Primavera · 19 anni · Italiano</div><div class="player-stats"><div class="pstat"><div class="pstat-val">3</div><div class="pstat-key">Goal</div></div><div class="pstat"><div class="pstat-val">89%</div><div class="pstat-key">Duelli</div></div><div class="pstat"><div class="pstat-val">82</div><div class="pstat-key">Rating</div></div></div></div>
       </div>
       <div class="player-card" data-category="Portiere">
-        <div class="player-visual v4 parallax-wrap">
-          <div class="player-jersey parallax-inner">🧤</div>
-          <div class="player-number">1</div>
-          <div class="player-position-badge">Portiere</div>
-        </div>
-        <div class="player-info">
-          <div class="player-name">G. Conti</div>
-          <div class="player-meta">Serie C · 23 anni · Italiano</div>
-          <div class="player-stats">
-            <div class="pstat"><div class="pstat-val">12</div><div class="pstat-key">Clean Sheet</div></div>
-            <div class="pstat"><div class="pstat-val">74%</div><div class="pstat-key">Parate</div></div>
-            <div class="pstat"><div class="pstat-val">85</div><div class="pstat-key">Rating</div></div>
-          </div>
-        </div>
+        <div class="player-visual v4 parallax-wrap"><div class="player-jersey parallax-inner">🧤</div><div class="player-number">1</div><div class="player-position-badge">Portiere</div></div>
+        <div class="player-info"><div class="player-name">G. Conti</div><div class="player-meta">Serie C · 23 anni · Italiano</div><div class="player-stats"><div class="pstat"><div class="pstat-val">12</div><div class="pstat-key">Clean Sheet</div></div><div class="pstat"><div class="pstat-val">74%</div><div class="pstat-key">Parate</div></div><div class="pstat"><div class="pstat-val">85</div><div class="pstat-key">Rating</div></div></div></div>
       </div>
     </div>
   </section>
 
   <!-- VIDEO -->
   <section class="video-section" id="video">
-    <div class="video-header reveal">
-      <p class="section-label" style="color:rgba(184,149,58,0.8);">Highlights & Analisi</p>
-      <h2 class="video-title">I <em>migliori</em><br>momenti in campo</h2>
-    </div>
-    <div class="video-grid reveal">
-      <div class="video-card">
-        <div class="video-thumb vt1">
-          <div class="play-btn">▶</div>
-          <div class="video-duration">2:34</div>
-        </div>
-        <div class="video-info">
-          <div class="video-title-card">M. Rossi — Highlights Stagione</div>
-          <div class="video-meta">Attaccante · Serie C · 2024</div>
-        </div>
-      </div>
-      <div class="video-card">
-        <div class="video-thumb vt2">
-          <div class="play-btn">▶</div>
-          <div class="video-duration">3:12</div>
-        </div>
-        <div class="video-info">
-          <div class="video-title-card">A. Bianchi — Visione di Gioco</div>
-          <div class="video-meta">Centrocampista · Serie D · 2024</div>
-        </div>
-      </div>
-      <div class="video-card">
-        <div class="video-thumb vt3">
-          <div class="play-btn">▶</div>
-          <div class="video-duration">1:58</div>
-        </div>
-        <div class="video-info">
-          <div class="video-title-card">L. Ferrari — Solidità Difensiva</div>
-          <div class="video-meta">Difensore · Primavera · 2024</div>
-        </div>
-      </div>
+    <p class="section-label" style="color:rgba(184,149,58,0.8); margin-bottom:1rem;">Highlights & Analisi</p>
+    <h2 class="video-title">I <em>migliori</em><br>momenti in campo</h2>
+    <div class="video-grid">
+      <div class="video-card"><div class="video-thumb vt1"><div class="play-btn">▶</div><div class="video-duration">2:34</div></div><div class="video-info"><div class="video-title-card">M. Rossi — Highlights Stagione</div><div class="video-meta">Attaccante · Serie C · 2024</div></div></div>
+      <div class="video-card"><div class="video-thumb vt2"><div class="play-btn">▶</div><div class="video-duration">3:12</div></div><div class="video-info"><div class="video-title-card">A. Bianchi — Visione di Gioco</div><div class="video-meta">Centrocampista · Serie D · 2024</div></div></div>
+      <div class="video-card"><div class="video-thumb vt3"><div class="play-btn">▶</div><div class="video-duration">1:58</div></div><div class="video-info"><div class="video-title-card">L. Ferrari — Solidità Difensiva</div><div class="video-meta">Difensore · Primavera · 2024</div></div></div>
     </div>
   </section>
 
   <!-- STATS -->
   <section class="stats-section" id="stats">
-    <p class="section-label reveal" style="justify-content:center;">I numeri parlano</p>
-    <h2 class="stats-title reveal">Dati & <em>Statistiche</em></h2>
-    <p class="stats-sub reveal">Ogni valutazione è supportata da dati concreti e osservazione diretta sul campo.</p>
-    <div class="stats-grid reveal">
+    <p class="section-label" style="justify-content:center;">I numeri parlano</p>
+    <h2 class="stats-title">Dati & <em>Statistiche</em></h2>
+    <p class="stats-sub">Ogni valutazione è supportata da dati concreti e osservazione diretta sul campo.</p>
+    <div class="stats-grid">
       <div class="stat-block"><div class="stat-big">120+</div><div class="stat-desc">Giocatori<br>valutati</div></div>
       <div class="stat-block"><div class="stat-big">8+</div><div class="stat-desc">Anni di<br>esperienza</div></div>
       <div class="stat-block"><div class="stat-big">15+</div><div class="stat-desc">Club<br>partner</div></div>
       <div class="stat-block"><div class="stat-big">94%</div><div class="stat-desc">Tasso di<br>placement</div></div>
     </div>
-
-    <div class="radar-wrap reveal">
+    <div class="radar-wrap">
       <div class="radar-visual">
-        <svg class="radar-svg" viewBox="0 0 300 300" id="radarSvg">
-          <!-- Background hexagons -->
+        <svg class="radar-svg" viewBox="0 0 300 300">
           <polygon points="150,30 255,90 255,210 150,270 45,210 45,90" fill="none" stroke="rgba(184,149,58,0.08)" stroke-width="1"/>
           <polygon points="150,60 228,105 228,195 150,240 72,195 72,105" fill="none" stroke="rgba(184,149,58,0.08)" stroke-width="1"/>
           <polygon points="150,90 201,120 201,180 150,210 99,180 99,120" fill="none" stroke="rgba(184,149,58,0.08)" stroke-width="1"/>
-          <!-- Axes -->
           <line x1="150" y1="30" x2="150" y2="270" stroke="rgba(184,149,58,0.1)" stroke-width="1"/>
           <line x1="45" y1="90" x2="255" y2="210" stroke="rgba(184,149,58,0.1)" stroke-width="1"/>
           <line x1="255" y1="90" x2="45" y2="210" stroke="rgba(184,149,58,0.1)" stroke-width="1"/>
-          <!-- Data polygon -->
-          <polygon id="radarData" points="150,50 240,100 230,195 150,250 70,195 65,100" fill="rgba(184,149,58,0.12)" stroke="rgba(184,149,58,0.7)" stroke-width="1.5"/>
-          <!-- Labels -->
+          <polygon points="150,50 240,100 230,195 150,250 70,195 65,100" fill="rgba(184,149,58,0.12)" stroke="rgba(184,149,58,0.7)" stroke-width="1.5"/>
           <text x="150" y="22" text-anchor="middle" fill="rgba(184,149,58,0.6)" font-size="10" font-family="Jost">Velocità</text>
           <text x="268" y="88" text-anchor="start" fill="rgba(184,149,58,0.6)" font-size="10" font-family="Jost">Tecnica</text>
           <text x="268" y="218" text-anchor="start" fill="rgba(184,149,58,0.6)" font-size="10" font-family="Jost">Fisico</text>
@@ -815,39 +400,33 @@
           <text x="32" y="88" text-anchor="end" fill="rgba(184,149,58,0.6)" font-size="10" font-family="Jost">Visione</text>
         </svg>
       </div>
-      <div class="radar-content">
+      <div>
         <h3 class="radar-title">Criteri di <em>valutazione</em></h3>
-        <div class="skill-row"><span class="skill-name">Velocità</span><div class="skill-bar-bg"><div class="skill-bar" data-width="88%"></div></div><span class="skill-val">88</span></div>
-        <div class="skill-row"><span class="skill-name">Tecnica</span><div class="skill-bar-bg"><div class="skill-bar" data-width="92%"></div></div><span class="skill-val">92</span></div>
-        <div class="skill-row"><span class="skill-name">Fisico</span><div class="skill-bar-bg"><div class="skill-bar" data-width="80%"></div></div><span class="skill-val">80</span></div>
-        <div class="skill-row"><span class="skill-name">Mentalità</span><div class="skill-bar-bg"><div class="skill-bar" data-width="95%"></div></div><span class="skill-val">95</span></div>
-        <div class="skill-row"><span class="skill-name">Tattica</span><div class="skill-bar-bg"><div class="skill-bar" data-width="85%"></div></div><span class="skill-val">85</span></div>
-        <div class="skill-row"><span class="skill-name">Visione</span><div class="skill-bar-bg"><div class="skill-bar" data-width="90%"></div></div><span class="skill-val">90</span></div>
+        <div class="skill-row"><span class="skill-name">Velocità</span><div class="skill-bar-bg"><div class="skill-bar" id="sb1" style="width:0%"></div></div><span class="skill-val">88</span></div>
+        <div class="skill-row"><span class="skill-name">Tecnica</span><div class="skill-bar-bg"><div class="skill-bar" id="sb2" style="width:0%"></div></div><span class="skill-val">92</span></div>
+        <div class="skill-row"><span class="skill-name">Fisico</span><div class="skill-bar-bg"><div class="skill-bar" id="sb3" style="width:0%"></div></div><span class="skill-val">80</span></div>
+        <div class="skill-row"><span class="skill-name">Mentalità</span><div class="skill-bar-bg"><div class="skill-bar" id="sb4" style="width:0%"></div></div><span class="skill-val">95</span></div>
+        <div class="skill-row"><span class="skill-name">Tattica</span><div class="skill-bar-bg"><div class="skill-bar" id="sb5" style="width:0%"></div></div><span class="skill-val">85</span></div>
+        <div class="skill-row"><span class="skill-name">Visione</span><div class="skill-bar-bg"><div class="skill-bar" id="sb6" style="width:0%"></div></div><span class="skill-val">90</span></div>
       </div>
     </div>
   </section>
 
   <!-- CONTACT -->
   <section class="contact" id="contact">
-    <div class="contact-left reveal">
+    <div class="contact-left">
       <p class="section-label">Lavoriamo insieme</p>
       <h2 class="contact-title">Troviamo il<br>profilo <em>giusto</em></h2>
       <p class="about-text" style="margin-top:1rem;">Sei una società in cerca di rinforzi o un agente che vuole valutare nuovi profili? Contattami: ti fornirò report dettagliati e analisi personalizzate.</p>
       <div class="contact-info">
-        <div class="contact-item"><strong>Email</strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4b232e2727240b2c2a2939222e272c223d2e2565282426">[email&#160;protected]</a></div>
+        <div class="contact-item"><strong>Email</strong>hello@gabrielgiven.com</div>
         <div class="contact-item"><strong>Telefono</strong>+39 000 000 0000</div>
         <div class="contact-item"><strong>Sede</strong>Milano, Italia</div>
       </div>
     </div>
-    <div class="contact-right reveal">
-      <div class="form-group">
-        <label>Il tuo nome</label>
-        <input type="text" id="fname" placeholder="Mario Rossi"/>
-      </div>
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="femail" placeholder="mario@email.com"/>
-      </div>
+    <div class="contact-right">
+      <div class="form-group"><label>Il tuo nome</label><input type="text" id="fname" placeholder="Mario Rossi"/></div>
+      <div class="form-group"><label>Email</label><input type="email" id="femail" placeholder="mario@email.com"/></div>
       <div class="form-group">
         <label>Sei un...</label>
         <select id="frole">
@@ -858,10 +437,7 @@
           <option>Altro</option>
         </select>
       </div>
-      <div class="form-group">
-        <label>Messaggio</label>
-        <textarea rows="4" id="fmessage" placeholder="Raccontami le tue esigenze di mercato o il profilo che stai cercando..."></textarea>
-      </div>
+      <div class="form-group"><label>Messaggio</label><textarea rows="4" id="fmessage" placeholder="Raccontami le tue esigenze di mercato o il profilo che stai cercando..."></textarea></div>
       <button class="btn-submit" id="submitBtn">Invia messaggio</button>
     </div>
   </section>
@@ -890,7 +466,7 @@
   </div>
 
   <!--Start of Tawk.to Script-->
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/javascript">
+  <script type="text/javascript">
   var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
   (function(){
   var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
@@ -904,93 +480,73 @@
   <!--End of Tawk.to Script-->
 
   <script>
-    // ── LOADER ──
-    function hideLoader() { document.getElementById('loader').classList.add('hidden'); }
-    window.addEventListener('load', () => setTimeout(hideLoader, 2400));
-    setTimeout(hideLoader, 4000); // fallback di sicurezza
+    // LOADER
+    const loaderEl = document.getElementById('loader');
+    function hideLoader() { loaderEl.classList.add('hidden'); }
+    setTimeout(hideLoader, 2800);
 
-    // ── CURSOR ──
+    // CURSOR
     const cursor = document.getElementById('cursor');
     const ring = document.getElementById('cursorRing');
     let mx=0, my=0, rx=0, ry=0;
-    document.addEventListener('mousemove', e => {
-      mx=e.clientX; my=e.clientY;
-      cursor.style.left=mx+'px'; cursor.style.top=my+'px';
-    });
-    function animateRing() {
-      rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12;
-      ring.style.left=rx+'px'; ring.style.top=ry+'px';
-      requestAnimationFrame(animateRing);
-    }
+    document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
+    function animateRing() { rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animateRing); }
     animateRing();
 
-    // ── DARK MODE ──
-    (function() {
-      const toggle = document.getElementById('themeToggle');
-      if (localStorage.getItem('theme')==='dark') { document.body.classList.add('dark'); toggle.textContent='☀️'; }
-      toggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark');
-        const isDark = document.body.classList.contains('dark');
-        toggle.textContent = isDark ? '☀️' : '🌙';
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-      });
-    })();
+    // DARK MODE
+    const toggle = document.getElementById('themeToggle');
+    if (localStorage.getItem('theme')==='dark') { document.body.classList.add('dark'); toggle.textContent='☀️'; }
+    toggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      toggle.textContent = isDark ? '☀️' : '🌙';
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
 
-    // ── SCROLL REVEAL ──
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('visible'), i * 80);
-        }
-      });
-    }, { threshold: 0.08 });
-    reveals.forEach(el => observer.observe(el));
-
-    // ── SKILL BARS ──
-    const barObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.querySelectorAll('.skill-bar').forEach(bar => {
-            bar.style.width = bar.dataset.width;
-          });
-        }
-      });
-    }, { threshold: 0.3 });
-    document.querySelectorAll('.radar-wrap').forEach(el => barObserver.observe(el));
-
-    // ── PARALLAX ──
-    const parallaxEls = document.querySelectorAll('.parallax-inner');
-    const heroBg = document.querySelector('.hero-bg');
+    // PARALLAX
     function updateParallax() {
       const scrollY = window.scrollY;
-      if (heroBg) heroBg.style.transform = `translateY(${scrollY * 0.25}px)`;
-      parallaxEls.forEach(el => {
-        const rect = el.closest('.parallax-wrap').getBoundingClientRect();
+      const bg = document.querySelector('.hero-bg');
+      if (bg) bg.style.transform = 'translateY('+scrollY*0.25+'px)';
+      document.querySelectorAll('.parallax-inner').forEach(el => {
+        const wrap = el.closest('.parallax-wrap');
+        if (!wrap) return;
+        const rect = wrap.getBoundingClientRect();
         const offset = (rect.top + rect.height/2 - window.innerHeight/2) * 0.1;
-        el.style.transform = `scale(1.1) translateY(${offset}px)`;
+        el.style.transform = 'scale(1.12) translateY('+offset+'px)';
       });
     }
-    window.addEventListener('scroll', updateParallax, { passive: true });
+    window.addEventListener('scroll', updateParallax, { passive:true });
     updateParallax();
 
-    // ── PORTFOLIO FILTER ──
+    // SKILL BARS on scroll
+    const skillBars = [
+      {id:'sb1', w:'88%'}, {id:'sb2', w:'92%'}, {id:'sb3', w:'80%'},
+      {id:'sb4', w:'95%'}, {id:'sb5', w:'85%'}, {id:'sb6', w:'90%'}
+    ];
+    const radarSection = document.querySelector('.radar-wrap');
+    let barsAnimated = false;
+    const radarObs = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && !barsAnimated) {
+        barsAnimated = true;
+        skillBars.forEach(b => { document.getElementById(b.id).style.width = b.w; });
+      }
+    }, { threshold: 0.3 });
+    if (radarSection) radarObs.observe(radarSection);
+
+    // PORTFOLIO FILTER
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', function() {
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         this.classList.add('active');
         const filter = this.dataset.filter;
         document.querySelectorAll('.player-card').forEach(card => {
-          if (filter === 'all' || card.dataset.category === filter) {
-            card.classList.remove('hidden');
-          } else {
-            card.classList.add('hidden');
-          }
+          card.classList.toggle('hidden', filter !== 'all' && card.dataset.category !== filter);
         });
       });
     });
 
-    // ── FORM SUBMIT ──
+    // FORM SUBMIT
     document.getElementById('submitBtn').addEventListener('click', async function() {
       const name = document.getElementById('fname').value.trim();
       const email = document.getElementById('femail').value.trim();
@@ -1000,26 +556,28 @@
       this.textContent = 'Invio in corso...'; this.disabled = true;
       try {
         const res = await fetch('https://formspree.io/f/xykdlgpn', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify({ name, email, role, message })
+          method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'},
+          body:JSON.stringify({name, email, role, message})
         });
         if (res.ok) {
-          this.textContent = 'Messaggio inviato ✓'; this.style.background = '#b8953a';
-          document.getElementById('fname').value='';
-          document.getElementById('femail').value='';
+          this.textContent = 'Inviato ✓'; this.style.background = '#b8953a';
+          ['fname','femail','fmessage'].forEach(id => document.getElementById(id).value='');
           document.getElementById('frole').value='';
-          document.getElementById('fmessage').value='';
         } else { this.textContent = 'Errore — riprova'; this.style.background = '#a05050'; }
       } catch(e) { this.textContent = 'Errore di rete'; this.style.background = '#a05050'; }
       setTimeout(() => { this.textContent='Invia messaggio'; this.style.background=''; this.disabled=false; }, 4000);
     });
 
-    // ── COOKIE BANNER ──
+    // COOKIE BANNER
     (function() {
       const banner = document.getElementById('cookieBanner');
       if (localStorage.getItem('cookie_consent')) return;
       setTimeout(() => { banner.style.opacity='1'; banner.style.transform='translateX(-50%) translateY(0)'; }, 1500);
-      function close() { banner.style.opacity='0'; banner.style.transform='translateX(-50%) translateY(120px)'; }
+      function close() { banner.style.opacity='0'; banner.style.transform='translateX(-50%) translateY(140px)'; }
       document.getElementById('cookieAccept').addEventListener('click', () => { localStorage.setItem('cookie_consent','all'); close(); });
-      document.getElementById('cookieEssential').addEventListener('click', () => { localStorag
+      document.getElementById('cookieEssential').addEventListener('click', () => { localStorage.setItem('cookie_consent','essential'); close(); });
+      document.getElementById('cookieDecline').addEventListener('click', () => { localStorage.setItem('cookie_consent','none'); close(); });
+    })();
+  </script>
+</body>
+</html>
